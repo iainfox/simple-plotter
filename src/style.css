@@ -1,0 +1,11 @@
+body {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1, h2 {
+    margin: 0;
+}
+
+.container {
+    width: 50%;
+}
