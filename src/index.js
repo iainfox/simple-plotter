@@ -29,14 +29,10 @@ function fillTemplate(file) {
 	document.body.appendChild(clone);
 
 	const heading_elem = document.getElementById("heading")
-	
 	const subheading_elem = document.getElementById("subheading")
 
-	const heading = file["heading"];
-	const subheading = file["subheading"];
-	
-	heading_elem.textContent = heading;
-	subheading_elem.textContent = subheading;
+	heading_elem.textContent = file["heading"];
+	subheading_elem.textContent = file["subheading"];
 
 	const data = file["data"];
 	const parsed_data = [];
@@ -51,6 +47,15 @@ function fillTemplate(file) {
 		parsed_data.push(final_trace);
 	}
 
-	Plotly.newPlot('plot-div', parsed_data);
+	const layout = {
+        xaxis: {
+            title: { text: file["x-title"] }
+        },
+        yaxis: {
+            title: { text: file["y-title"] }
+        }
+    };
+
+	Plotly.newPlot('plot-div', parsed_data, layout);
 }
 
