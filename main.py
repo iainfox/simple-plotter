@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import json
 
-LENGTH = 100
+LENGTH = 500
 
 def generate_trace(length):
     x = pd.date_range(start="2026-05-01", periods=length).strftime("%Y-%m-%d").tolist()
@@ -17,13 +17,9 @@ def generate_trace(length):
 
     return {
         "x-axis": {
-            "title": "X-Axis",
-            "subtitle": "X-Axis sub title",
             "data": x
         },
         "y-axis": {
-            "title": "Y-Axis",
-            "subtitle": "Y-Axis sub title",
             "data": y
         }
     }
@@ -33,6 +29,8 @@ def generate_json(length, filename="output.json"):
     data = {
         "heading": "Example heading",
         "subheading": "Example sub heading",
+        "x-title": "X-Axis",
+        "y-title": "Y-Axis",
         "data": {
             "trace1": generate_trace(length),
             "trace2": generate_trace(length)
@@ -44,4 +42,4 @@ def generate_json(length, filename="output.json"):
 
     print(f"Saved {filename}")
 
-generate_json(LENGTH, "small.json")
+generate_json(LENGTH, "medium.json")
