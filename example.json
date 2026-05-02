@@ -1,28 +1,42 @@
 {
-    "heading": "Example heading",
-    "sub_heading": "Example sub heading",
-    "data": {
-        "x-axis": {
-            "title": "X-Axis",
-            "sub_title": "X-Axis sub title",
-            "data": [
-                "2026-05-01",
-                "2026-05-02",
-                "2026-05-03",
-                "2026-05-04",
-                "2026-05-05"
-            ]
-        }, 
-        "y-axis": {
-            "title": "Y-Axis",
-            "sub_title": "Y-Axis sub title",
-            "data": [
-                1,
-                2,
-                3,
-                4,
-                5
-            ]
-        }
-    }
+	"heading": "Example heading",
+	"sub_heading": "Example sub heading",
+	"data": {
+		"trace1": {
+			"x-axis": {
+				"title": "X-Axis",
+				"sub_title": "X-Axis sub title",
+				"data": [
+					"2026-05-01",
+					"2026-05-02",
+					"2026-05-03",
+					"2026-05-04",
+					"2026-05-05"
+				]
+			},
+			"y-axis": {
+				"title": "Y-Axis",
+				"sub_title": "Y-Axis sub title",
+				"data": [1, 2, 3, 4, 5]
+			}
+		},
+		"trace2": {
+			"x-axis": {
+				"title": "X-Axis",
+				"sub_title": "X-Axis sub title",
+				"data": [
+					"2026-05-01",
+					"2026-05-02",
+					"2026-05-03",
+					"2026-05-04",
+					"2026-05-05"
+				]
+			},
+			"y-axis": {
+				"title": "Y-Axis",
+				"sub_title": "Y-Axis sub title",
+				"data": [5, 2, 4, 3, 1]
+			}
+		}
+	}
 }
