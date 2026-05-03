@@ -1,8 +1,8 @@
 const file_input = document.getElementById("file-input");
-if (!file_input) { throw new Error("No file input found")};
+if (!file_input) { throw new Error("No file input found") };
 
 const data_template = document.getElementById("data-template");
-if (!data_template) { throw new Error("No template found")};
+if (!data_template) { throw new Error("No template found") };
 
 file_input.addEventListener("cancel", () => {
 	console.log("Cancelled.");
@@ -34,6 +34,53 @@ function fillTemplate(file) {
 	subheading_elem.textContent = file["subheading"];
 
 	fillTimeSeries(file["time-series"])
+	fillBarChart(file["bar-chart"]);
+}
+
+function fillBarChart(barchart) {
+	const x = barchart["x-axis"]
+
+	const y1 = barchart["y1"]
+
+	const y2 = barchart["y2"].map((v1, index) => {
+		const v2 = y1[index];
+		return v1 - v2;
+	});
+
+	const yLabel = y1.map((v1, index) => {
+		const v2 = y2[index];
+		return Math.round((v1 / (v1 + v2)) * 1000) / 10;
+	});
+
+	const trace1 = {
+		x: x,
+		y: y1,
+		name: 'G',
+		type: 'bar',
+		marker: {
+			color: 'rgb(20, 75, 255)',
+		}
+	};
+
+	const trace2 = {
+		x: x,
+		y: y2,
+		name: 'D',
+		type: 'bar',
+
+		text: yLabel.map(String),
+		textposition: 'auto',
+		hoverinfo: 'none',
+		marker: {
+			color: 'rgb(172, 172, 172)',
+		}
+	};
+
+	const data = [trace1, trace2];
+
+	const layout = { barmode: 'stack' };
+
+	Plotly.newPlot('barchart-plot', data, layout);
 }
 
 function fillTimeSeries(time_series) {
@@ -55,13 +102,13 @@ function fillTimeSeries(time_series) {
 	}
 
 	const layout = {
-        xaxis: {
-            title: { text: time_series["x-title"] }
-        },
-        yaxis: {
-            title: { text: time_series["y-title"] }
-        }
-    };
+		xaxis: {
+			title: { text: time_series["x-title"] }
+		},
+		yaxis: {
+			title: { text: time_series["y-title"] }
+		}
+	};
 
 	Plotly.newPlot('timeseries-plot', parsed_data, layout, config);
 }

@@ -20,5 +20,12 @@ h1, h2 {
 }
 
 .data-section {
+    display: flex;
+    flex-direction: row;
     background-color: rgba(0, 0, 0, 0.1);
+    min-height: 25%;
+}
+
+.data-section div {
+    height: 100%;
 }
