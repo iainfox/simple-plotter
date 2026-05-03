@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="style.css" />
+	<script src="https://cdn.plot.ly/plotly-3.4.0.min.js" charset="utf-8"></script>
+	<title>TBD</title>
+</head>
+
+<body>
+	<template id="data-template">
+		<header class="header">
+			<div class="header-section">
+				<h1 class="heading" id="heading">Example heading</h1>
+				<h2 class="subheading" id="subheading">Example sub heading</h2>
+			</div>
+		</header>
+
+		<div class="data">
+			<div class="data-section">
+				<div id="barchart-plot"></div>
+			</div>
+
+			<div class="data-section">
+				<div class="plot" id="timeseries-plot"></div>
+			</div>
+		</div>
+	</template>
+
+	<input type="file" name="file-input" id="file-input" accept=".json">
+
+	<script type="module">
+const file_input = document.getElementById("file-input");
+if (!file_input) { throw new Error("No file input found") };
+
+const data_template = document.getElementById("data-template");
+if (!data_template) { throw new Error("No template found") };
+
+file_input.addEventListener("cancel", () => {
+	console.log("Cancelled.");
+});
+file_input.addEventListener("change", () => {
+	if (file_input.files.length !== 1) return
+
+	const file = file_input.files[0];
+
+	const reader = new FileReader();
+	reader.onload = () => {
+		fillTemplate(JSON.parse(reader.result))
+	};
+	reader.onerror = () => {
+		console.log("Error reading the file. Please try again.", "error");
+	};
+	reader.readAsText(file);
+});
+
+function fillTemplate(file) {
+	document.body.replaceChildren()
+
+	const clone = data_template.content.cloneNode(true);
+	document.body.appendChild(clone);
+
+	const heading_elem = document.getElementById("heading")
+	const subheading_elem = document.getElementById("subheading")
+	heading_elem.textContent = file["heading"];
+	subheading_elem.textContent = file["subheading"];
+
+	fillTimeSeries(file["time-series"])
+	fillBarChart(file["bar-chart"]);
+}
+
+function fillBarChart(barchart) {
+	const x = barchart["x-axis"]
+
+	const y1 = barchart["y1"]
+
+	const y2 = barchart["y2"].map((v1, index) => {
+		const v2 = y1[index];
+		return v1 - v2;
+	});
+
+	const yLabel = y1.map((v1, index) => {
+		const v2 = y2[index];
+		return Math.round((v1 / (v1 + v2)) * 1000) / 10;
+	});
+
+	const trace1 = {
+		x: x,
+		y: y1,
+		name: 'G',
+		type: 'bar',
+		marker: {
+			color: 'rgb(20, 75, 255)',
+		}
+	};
+
+	const trace2 = {
+		x: x,
+		y: y2,
+		name: 'D',
+		type: 'bar',
+
+		text: yLabel.map(String),
+		textposition: 'auto',
+		hoverinfo: 'none',
+		marker: {
+			color: 'rgb(172, 172, 172)',
+		}
+	};
+
+	const data = [trace1, trace2];
+
+	const layout = { barmode: 'stack' };
+
+	Plotly.newPlot('barchart-plot', data, layout);
+}
+
+function fillTimeSeries(time_series) {
+	const data = time_series["data"];
+	const parsed_data = [];
+
+	for (const trace of Object.values(data)) {
+		let final_trace = {};
+
+		final_trace["x"] = trace["x-axis"]["data"];
+		final_trace["y"] = trace["y-axis"]["data"];
+		final_trace["type"] = "scatter";
+
+		parsed_data.push(final_trace);
+	}
+
+	const config = {
+		responsive: true,
+	}
+
+	const layout = {
+		xaxis: {
+			title: { text: time_series["x-title"] }
+		},
+		yaxis: {
+			title: { text: time_series["y-title"] }
+		}
+	};
+
+	Plotly.newPlot('timeseries-plot', parsed_data, layout, config);
+}
+</script>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 import os
 
 major = 1
-minor = 1
+minor = 2
 patch = 0
 
 version = f"{major}.{minor}.{patch}"
