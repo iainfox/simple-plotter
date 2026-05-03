@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import json
 
-LENGTH = 500
+LENGTH = 1000
 
 def generate_trace(length):
     x = pd.date_range(start="2026-05-01", periods=length).strftime("%Y-%m-%d").tolist()
@@ -25,15 +25,33 @@ def generate_trace(length):
     }
 
 
+def generate_bar_chart():
+    labels = ["Gen 1", "Gen 2", "Gen 3", "Gen 4"]
+
+    y1 = np.random.randint(20, 500, size=4).tolist()
+    y2 = np.random.randint(500, 700, size=4).tolist()
+
+    return {
+        "x-axis": labels,
+        "y1": y1,
+        "y2": y2
+    }
+
+
 def generate_json(length, filename="output.json"):
     data = {
         "heading": "Example heading",
         "subheading": "Example sub heading",
-        "x-title": "X-Axis",
-        "y-title": "Y-Axis",
-        "data": {
-            "trace1": generate_trace(length),
-            "trace2": generate_trace(length)
+
+        "bar-chart": generate_bar_chart(),
+
+        "time-series": {
+            "x-title": "X-Axis",
+            "y-title": "Y-Axis",
+            "data": {
+                "trace1": generate_trace(length),
+                "trace2": generate_trace(length)
+            }
         }
     }
 
@@ -42,4 +60,4 @@ def generate_json(length, filename="output.json"):
 
     print(f"Saved {filename}")
 
-generate_json(LENGTH, "medium.json")
+generate_json(LENGTH, "large.json")
