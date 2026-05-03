@@ -30,11 +30,14 @@ function fillTemplate(file) {
 
 	const heading_elem = document.getElementById("heading")
 	const subheading_elem = document.getElementById("subheading")
-
 	heading_elem.textContent = file["heading"];
 	subheading_elem.textContent = file["subheading"];
 
-	const data = file["data"];
+	fillTimeSeries(file["time-series"])
+}
+
+function fillTimeSeries(time_series) {
+	const data = time_series["data"];
 	const parsed_data = [];
 
 	for (const trace of Object.values(data)) {
@@ -47,15 +50,18 @@ function fillTemplate(file) {
 		parsed_data.push(final_trace);
 	}
 
+	const config = {
+		responsive: true,
+	}
+
 	const layout = {
         xaxis: {
-            title: { text: file["x-title"] }
+            title: { text: time_series["x-title"] }
         },
         yaxis: {
-            title: { text: file["y-title"] }
+            title: { text: time_series["y-title"] }
         }
     };
 
-	Plotly.newPlot('plot-div', parsed_data, layout);
+	Plotly.newPlot('timeseries-plot', parsed_data, layout, config);
 }
-
