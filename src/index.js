@@ -33,8 +33,9 @@ function fillTemplate(file) {
 	heading_elem.textContent = file["heading"];
 	subheading_elem.textContent = file["subheading"];
 
-	fillTimeSeries(file["time-series"])
+	fillTimeSeries(file["time-series"]);
 	fillBarChart(file["bar-chart"]);
+	fillGavs(file["gavs"])
 }
 
 function fillBarChart(barchart) {
@@ -93,6 +94,18 @@ function fillBarChart(barchart) {
 	};
 
 	Plotly.newPlot('barchart-plot', data, layout);
+}
+
+function fillGavs(gavs) {
+	const gav_container = document.getElementById("gav-container");
+	if (!gav_container) { return }
+
+	gavs.forEach(value => {
+		const gav = document.createElement("div")
+		gav.classList.add("circle")
+		value === 1 ? gav.classList.add("bad-gav") : null
+		gav_container.appendChild(gav)
+	});
 }
 
 function fillTimeSeries(time_series) {
