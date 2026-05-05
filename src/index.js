@@ -14,7 +14,10 @@ file_input.addEventListener("change", () => {
 
 	const reader = new FileReader();
 	reader.onload = () => {
-		fillTemplate(JSON.parse(reader.result))
+		const data = JSON.parse(reader.result)
+		const gen = Object.keys(data)[0]
+
+		fillTemplate(gen, data)
 	};
 	reader.onerror = () => {
 		console.log("Error reading the file. Please try again.", "error");
@@ -22,20 +25,37 @@ file_input.addEventListener("change", () => {
 	reader.readAsText(file);
 });
 
-function fillTemplate(file) {
+function fillTemplate(current_gen, data) {
+	const current_gen_data = data[current_gen];
+
 	document.body.replaceChildren()
 
 	const clone = data_template.content.cloneNode(true);
 	document.body.appendChild(clone);
 
+	const gen_dropdown = document.getElementById("gen-dropdown");
+	gen_dropdown.addEventListener('change', (e) => fillTemplate(e.target.value, data))
+
+	for (const [header, gen] of Object.entries(data)) {
+		const option = document.createElement("option");
+		option.value = header;
+		option.textContent = header;
+
+		if (header == current_gen) {
+			option.setAttribute("selected", "");
+		}
+
+		gen_dropdown.appendChild(option);
+	}
+
 	const heading_elem = document.getElementById("heading")
 	const subheading_elem = document.getElementById("subheading")
-	heading_elem.textContent = file["heading"];
-	subheading_elem.textContent = file["subheading"];
+	heading_elem.textContent = current_gen;
+	subheading_elem.textContent = current_gen_data["subheading"];
 
-	fillTimeSeries(file["time-series"]);
-	fillBarChart(file["bar-chart"]);
-	fillGavs(file["gavs"])
+	fillTimeSeries(current_gen_data["time-series"]);
+	fillBarChart(current_gen_data["bar-chart"]);
+	fillGavs(current_gen_data["gavs"])
 }
 
 function fillBarChart(barchart) {
