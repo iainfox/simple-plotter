@@ -55,7 +55,7 @@ function fillBarChart(barchart) {
 	const trace1 = {
 		x: x,
 		y: y1,
-		name: 'G',
+		name: barchart["y1-name"],
 		type: 'bar',
 		marker: {
 			color: 'rgb(20, 75, 255)',
@@ -65,7 +65,7 @@ function fillBarChart(barchart) {
 	const trace2 = {
 		x: x,
 		y: y2,
-		name: 'D',
+		name: barchart["y2-name"],
 		type: 'bar',
 
 		text: yLabel.map(String),
@@ -78,7 +78,19 @@ function fillBarChart(barchart) {
 
 	const data = [trace1, trace2];
 
-	const layout = { barmode: 'stack' };
+	const config = {
+		responsive: true,
+	}
+
+	const layout = {
+		barmode: 'stack',
+		xaxis: {
+			title: { text: barchart["x-label"] }
+		},
+		yaxis: {
+			title: { text: barchart["y-label"] }
+		}
+	};
 
 	Plotly.newPlot('barchart-plot', data, layout);
 }
