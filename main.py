@@ -25,11 +25,11 @@ def generate_trace(length):
     }
 
 
-def generate_bar_chart():
-    labels = ["Gen 1", "Gen 2", "Gen 3", "Gen 4"]
+def generate_bar_chart(n):
+    labels = ["Gen "+str(n)]
 
-    y1 = np.random.randint(20, 500, size=4).tolist()
-    y2 = np.random.randint(500, 700, size=4).tolist()
+    y1 = np.random.randint(20, 500, size=1).tolist()
+    y2 = np.random.randint(500, 700, size=1).tolist()
 
     return {
         "x-label": "X-Axis Label",
@@ -55,11 +55,12 @@ def generate_gavs():
         ]
 
 def generate_json(length, filename="output.json"):
-    data = {
-        "heading": "Example heading",
+    data = {}
+    for i in range(4):
+        data["Example heading "+str(i)] = {
         "subheading": "Example sub heading",
 
-        "bar-chart": generate_bar_chart(),
+        "bar-chart": generate_bar_chart(i),
 
         "gavs": generate_gavs(),
 

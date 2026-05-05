@@ -1,80 +1,288 @@
 {
-    "heading": "Example heading",
-    "subheading": "Example sub heading",
-    "bar-chart": {
-        "x-label": "X-Axis Label",
-        "y-label": "Y-Axis Label",
-        "y1-name": "G",
-        "y2-name": "D",
-        "x-axis": [
-            "Gen 1",
-            "Gen 2",
-            "Gen 3",
-            "Gen 4"
+    "Example heading 0": {
+        "subheading": "Example sub heading",
+        "bar-chart": {
+            "x-label": "X-Axis Label",
+            "y-label": "Y-Axis Label",
+            "y1-name": "G",
+            "y2-name": "D",
+            "x-axis": [
+                "Gen 0"
+            ],
+            "y1": [
+                347
+            ],
+            "y2": [
+                644
+            ]
+        },
+        "gavs": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            0
         ],
-        "y1": [
-            450,
-            473,
-            214,
-            365
-        ],
-        "y2": [
-            690,
-            638,
-            551,
-            662
-        ]
-    },
-    "gavs": [
-        1,
-        1,
-        1,
-        0,
-        0,
-        1
-    ],
-    "time-series": {
-        "x-title": "X-Axis",
-        "y-title": "Y-Axis",
-        "data": {
-            "trace1": {
-                "x-axis": {
-                    "data": [
-                        "2026-05-01",
-                        "2026-05-02",
-                        "2026-05-03",
-                        "2026-05-04",
-                        "2026-05-05"
-                    ]
+        "time-series": {
+            "x-title": "X-Axis",
+            "y-title": "Y-Axis",
+            "data": {
+                "trace1": {
+                    "x-axis": {
+                        "data": [
+                            "2026-05-01",
+                            "2026-05-02",
+                            "2026-05-03",
+                            "2026-05-04",
+                            "2026-05-05"
+                        ]
+                    },
+                    "y-axis": {
+                        "data": [
+                            0,
+                            15,
+                            18,
+                            36,
+                            49
+                        ]
+                    }
                 },
-                "y-axis": {
-                    "data": [
-                        0,
-                        9,
-                        24,
-                        35,
-                        48
-                    ]
+                "trace2": {
+                    "x-axis": {
+                        "data": [
+                            "2026-05-01",
+                            "2026-05-02",
+                            "2026-05-03",
+                            "2026-05-04",
+                            "2026-05-05"
+                        ]
+                    },
+                    "y-axis": {
+                        "data": [
+                            11,
+                            8,
+                            35,
+                            41,
+                            50
+                        ]
+                    }
                 }
-            },
-            "trace2": {
-                "x-axis": {
-                    "data": [
-                        "2026-05-01",
-                        "2026-05-02",
-                        "2026-05-03",
-                        "2026-05-04",
-                        "2026-05-05"
-                    ]
+            }
+        }
+    },
+    "Example heading 1": {
+        "subheading": "Example sub heading",
+        "bar-chart": {
+            "x-label": "X-Axis Label",
+            "y-label": "Y-Axis Label",
+            "y1-name": "G",
+            "y2-name": "D",
+            "x-axis": [
+                "Gen 1"
+            ],
+            "y1": [
+                396
+            ],
+            "y2": [
+                551
+            ]
+        },
+        "gavs": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+        ],
+        "time-series": {
+            "x-title": "X-Axis",
+            "y-title": "Y-Axis",
+            "data": {
+                "trace1": {
+                    "x-axis": {
+                        "data": [
+                            "2026-05-01",
+                            "2026-05-02",
+                            "2026-05-03",
+                            "2026-05-04",
+                            "2026-05-05"
+                        ]
+                    },
+                    "y-axis": {
+                        "data": [
+                            0,
+                            15,
+                            20,
+                            37,
+                            52
+                        ]
+                    }
                 },
-                "y-axis": {
-                    "data": [
-                        4,
-                        18,
-                        29,
-                        40,
-                        50
-                    ]
+                "trace2": {
+                    "x-axis": {
+                        "data": [
+                            "2026-05-01",
+                            "2026-05-02",
+                            "2026-05-03",
+                            "2026-05-04",
+                            "2026-05-05"
+                        ]
+                    },
+                    "y-axis": {
+                        "data": [
+                            6,
+                            17,
+                            25,
+                            38,
+                            43
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "Example heading 2": {
+        "subheading": "Example sub heading",
+        "bar-chart": {
+            "x-label": "X-Axis Label",
+            "y-label": "Y-Axis Label",
+            "y1-name": "G",
+            "y2-name": "D",
+            "x-axis": [
+                "Gen 2"
+            ],
+            "y1": [
+                352
+            ],
+            "y2": [
+                696
+            ]
+        },
+        "gavs": [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+        ],
+        "time-series": {
+            "x-title": "X-Axis",
+            "y-title": "Y-Axis",
+            "data": {
+                "trace1": {
+                    "x-axis": {
+                        "data": [
+                            "2026-05-01",
+                            "2026-05-02",
+                            "2026-05-03",
+                            "2026-05-04",
+                            "2026-05-05"
+                        ]
+                    },
+                    "y-axis": {
+                        "data": [
+                            0,
+                            11,
+                            28,
+                            46,
+                            44
+                        ]
+                    }
+                },
+                "trace2": {
+                    "x-axis": {
+                        "data": [
+                            "2026-05-01",
+                            "2026-05-02",
+                            "2026-05-03",
+                            "2026-05-04",
+                            "2026-05-05"
+                        ]
+                    },
+                    "y-axis": {
+                        "data": [
+                            0,
+                            13,
+                            35,
+                            40,
+                            57
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "Example heading 3": {
+        "subheading": "Example sub heading",
+        "bar-chart": {
+            "x-label": "X-Axis Label",
+            "y-label": "Y-Axis Label",
+            "y1-name": "G",
+            "y2-name": "D",
+            "x-axis": [
+                "Gen 3"
+            ],
+            "y1": [
+                119
+            ],
+            "y2": [
+                536
+            ]
+        },
+        "gavs": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0
+        ],
+        "time-series": {
+            "x-title": "X-Axis",
+            "y-title": "Y-Axis",
+            "data": {
+                "trace1": {
+                    "x-axis": {
+                        "data": [
+                            "2026-05-01",
+                            "2026-05-02",
+                            "2026-05-03",
+                            "2026-05-04",
+                            "2026-05-05"
+                        ]
+                    },
+                    "y-axis": {
+                        "data": [
+                            0,
+                            4,
+                            27,
+                            28,
+                            40
+                        ]
+                    }
+                },
+                "trace2": {
+                    "x-axis": {
+                        "data": [
+                            "2026-05-01",
+                            "2026-05-02",
+                            "2026-05-03",
+                            "2026-05-04",
+                            "2026-05-05"
+                        ]
+                    },
+                    "y-axis": {
+                        "data": [
+                            0,
+                            12,
+                            20,
+                            37,
+                            54
+                        ]
+                    }
                 }
             }
         }
