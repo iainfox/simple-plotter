@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<style>
+body {
+    box-sizing: border-box;
+
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    margin: 0;
+    padding: 15px;
+}
+
+h1,
+h2 {
+    margin: 0;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.data-section {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    min-height: 25%;
+}
+
+.data-section div {
+    height: 100%;
+}
+
+.gavs {
+    width: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.circle {
+    width: 45%;
+    aspect-ratio: 1/1;
+    border: 2px solid rgb(112, 255, 119);
+    background-color: rgba(0, 255, 21, 0.308);
+    border-radius: 50%;
+}
+
+.bad-gav {
+    border: 2px solid rgb(255, 112, 119);
+    background-color: rgba(255, 0, 64, 0.308);
+}
+
+.column {
+    flex-direction: column;
+}
+</style>
+	<script src="https://cdn.plot.ly/plotly-3.4.0.min.js" charset="utf-8"></script>
+	<title>TBD</title>
+</head>
+
+<body>
+	<template id="data-template">
+		<header class="header">
+			<div class="header-section">
+				<select name="gen-dropdown" id="gen-dropdown">
+				</select>
+
+				<h1 class="heading" id="heading">Example heading</h1>
+				<h2 class="subheading" id="subheading">Example sub heading</h2>
+			</div>
+		</header>
+
+		<div class="data">
+			<div class="data-section">
+				<div id="barchart-plot"></div>
+			</div>
+
+			<div class="data-section column">
+				<h2>Bad Gavs:</h2>
+				<div class="gavs" id="gav-container">
+				</div>
+			</div>
+
+			<div class="data-section">
+				<div class="plot" id="timeseries-plot"></div>
+			</div>
+		</div>
+	</template>
+
+	<input type="file" name="file-input" id="file-input" accept=".json">
+
+	<script type="module">
+const file_input = document.getElementById("file-input");
+if (!file_input) { throw new Error("No file input found") };
+
+const data_template = document.getElementById("data-template");
+if (!data_template) { throw new Error("No template found") };
+
+file_input.addEventListener("cancel", () => {
+	console.log("Cancelled.");
+});
+file_input.addEventListener("change", () => {
+	if (file_input.files.length !== 1) return
+
+	const file = file_input.files[0];
+
+	const reader = new FileReader();
+	reader.onload = () => {
+		const data = JSON.parse(reader.result)
+		const gen = Object.keys(data)[0]
+
+		fillTemplate(gen, data)
+	};
+	reader.onerror = () => {
+		console.log("Error reading the file. Please try again.", "error");
+	};
+	reader.readAsText(file);
+});
+
+function fillTemplate(current_gen, data) {
+	const current_gen_data = data[current_gen];
+
+	document.body.replaceChildren()
+
+	const clone = data_template.content.cloneNode(true);
+	document.body.appendChild(clone);
+
+	const gen_dropdown = document.getElementById("gen-dropdown");
+	gen_dropdown.addEventListener('change', (e) => fillTemplate(e.target.value, data))
+
+	for (const [header, gen] of Object.entries(data)) {
+		const option = document.createElement("option");
+		option.value = header;
+		option.textContent = header;
+
+		if (header == current_gen) {
+			option.setAttribute("selected", "");
+		}
+
+		gen_dropdown.appendChild(option);
+	}
+
+	const heading_elem = document.getElementById("heading")
+	const subheading_elem = document.getElementById("subheading")
+	heading_elem.textContent = current_gen;
+	subheading_elem.textContent = current_gen_data["subheading"];
+
+	fillTimeSeries(current_gen_data["time-series"]);
+	fillBarChart(current_gen_data["bar-chart"]);
+	fillGavs(current_gen_data["gavs"])
+}
+
+function fillBarChart(barchart) {
+	const x = barchart["x-axis"]
+
+	const y1 = barchart["y1"]
+
+	const y2 = barchart["y2"].map((v1, index) => {
+		const v2 = y1[index];
+		return v1 - v2;
+	});
+
+	const yLabel = y1.map((v1, index) => {
+		const v2 = y2[index];
+		return Math.round((v1 / (v1 + v2)) * 1000) / 10;
+	});
+
+	const trace1 = {
+		x: x,
+		y: y1,
+		name: barchart["y1-name"],
+		type: 'bar',
+		marker: {
+			color: 'rgb(20, 75, 255)',
+		}
+	};
+
+	const trace2 = {
+		x: x,
+		y: y2,
+		name: barchart["y2-name"],
+		type: 'bar',
+
+		text: yLabel.map(String),
+		textposition: 'auto',
+		hoverinfo: 'none',
+		marker: {
+			color: 'rgb(172, 172, 172)',
+		}
+	};
+
+	const data = [trace1, trace2];
+
+	const config = {
+		responsive: true,
+	}
+
+	const layout = {
+		barmode: 'stack',
+		xaxis: {
+			title: { text: barchart["x-label"] }
+		},
+		yaxis: {
+			title: { text: barchart["y-label"] }
+		}
+	};
+
+	Plotly.newPlot('barchart-plot', data, layout);
+}
+
+function fillGavs(gavs) {
+	const gav_container = document.getElementById("gav-container");
+	if (!gav_container) { return }
+
+	gavs.forEach(value => {
+		const gav = document.createElement("div")
+		gav.classList.add("circle")
+		value === 1 ? gav.classList.add("bad-gav") : null
+		gav_container.appendChild(gav)
+	});
+}
+
+function fillTimeSeries(time_series) {
+	const data = time_series["data"];
+	const parsed_data = [];
+
+	for (const trace of Object.values(data)) {
+		let final_trace = {};
+
+		final_trace["x"] = trace["x-axis"]["data"];
+		final_trace["y"] = trace["y-axis"]["data"];
+		final_trace["type"] = "scatter";
+
+		parsed_data.push(final_trace);
+	}
+
+	const config = {
+		responsive: true,
+	}
+
+	const layout = {
+		xaxis: {
+			title: { text: time_series["x-title"] }
+		},
+		yaxis: {
+			title: { text: time_series["y-title"] }
+		}
+	};
+
+	Plotly.newPlot('timeseries-plot', parsed_data, layout, config);
+}
+</script>
+</body>
+
+</html>
