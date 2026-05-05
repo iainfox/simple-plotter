@@ -2,6 +2,10 @@
     "heading": "Example heading",
     "subheading": "Example sub heading",
     "bar-chart": {
+        "x-label": "X-Axis Label",
+        "y-label": "Y-Axis Label",
+        "y1-name": "G",
+        "y2-name": "D",
         "x-axis": [
             "Gen 1",
             "Gen 2",
@@ -9,16 +13,16 @@
             "Gen 4"
         ],
         "y1": [
-            473,
-            429,
-            340,
-            352
+            301,
+            79,
+            495,
+            404
         ],
         "y2": [
-            645,
-            659,
-            574,
-            629
+            677,
+            597,
+            624,
+            579
         ]
     },
     "time-series": {
@@ -37,11 +41,11 @@
                 },
                 "y-axis": {
                     "data": [
-                        9,
-                        13,
-                        34,
-                        36,
-                        45
+                        0,
+                        18,
+                        22,
+                        30,
+                        53
                     ]
                 }
             },
@@ -57,11 +61,11 @@
                 },
                 "y-axis": {
                     "data": [
-                        0,
-                        12,
-                        21,
-                        44,
-                        51
+                        3,
+                        15,
+                        26,
+                        34,
+                        48
                     ]
                 }
             }

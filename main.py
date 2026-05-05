@@ -32,6 +32,10 @@ def generate_bar_chart():
     y2 = np.random.randint(500, 700, size=4).tolist()
 
     return {
+        "x-label": "X-Axis Label",
+        "y-label": "Y-Axis Label",
+        "y1-name": "G",
+        "y2-name": "D",
         "x-axis": labels,
         "y1": y1,
         "y2": y2
@@ -60,4 +64,8 @@ def generate_json(length, filename="output.json"):
 
     print(f"Saved {filename}")
 
-generate_json(LENGTH, "large.json")
+
+generate_json(5, "example_data/example.json")
+generate_json(100, "example_data/small.json")
+generate_json(500, "example_data/medium.json")
+generate_json(1000, "example_data/large.json")
