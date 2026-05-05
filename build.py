@@ -23,7 +23,7 @@ with open("src/index.js", "r", encoding="utf-8") as f:
     js = f.read()
 
 html = html.replace(
-    '<link rel="stylesheet" href="style.css">',
+    '<link rel="stylesheet" href="style.css" />',
     f"<style>\n{css}\n</style>"
 )
 
