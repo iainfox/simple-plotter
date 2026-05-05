@@ -41,6 +41,18 @@ def generate_bar_chart():
         "y2": y2
     }
 
+def generate_gavs():
+    random = np.random.randint(0, 2)
+    if (random == 0):
+        return [
+            np.random.randint(0, 2), np.random.randint(0, 2),
+            np.random.randint(0, 2), np.random.randint(0, 2),
+            np.random.randint(0, 2), np.random.randint(0, 2),
+        ]
+    return [
+            np.random.randint(0, 2), np.random.randint(0, 2),
+            np.random.randint(0, 2), np.random.randint(0, 2),
+        ]
 
 def generate_json(length, filename="output.json"):
     data = {
@@ -48,6 +60,8 @@ def generate_json(length, filename="output.json"):
         "subheading": "Example sub heading",
 
         "bar-chart": generate_bar_chart(),
+
+        "gavs": generate_gavs(),
 
         "time-series": {
             "x-title": "X-Axis",
